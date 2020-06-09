@@ -1,6 +1,7 @@
 package com.ne4ephoji.entities
 
-enum class ChessFigure {
-    WHITE_PAWN, WHITE_KNIGHT, WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, WHITE_KING,
-    BLACK_PAWN, BLACK_KNIGHT, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, BLACK_KING
+data class ChessFigure(val type: Type, val side: ChessSide) {
+    enum class Type {
+        PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
+    }
 }
