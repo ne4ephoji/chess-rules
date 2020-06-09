@@ -1,8 +1,8 @@
 package com.ne4ephoji.entities
 
 data class ChessCastlings(
-    val whiteKingsideCastlingAvailable: Boolean,
-    val whiteQueensideCastlingAvailable: Boolean,
-    val blackKingsideCastlingAvailable: Boolean,
-    val blackQueensideCastlingAvailable: Boolean
+    var whiteKingsideCastlingAvailable: Boolean,
+    var whiteQueensideCastlingAvailable: Boolean,
+    var blackKingsideCastlingAvailable: Boolean,
+    var blackQueensideCastlingAvailable: Boolean
 )

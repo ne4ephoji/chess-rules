@@ -311,7 +311,7 @@ private fun ChessPosition.getKingMovesFromField(field: ChessField): Set<ChessMov
                     && figures[7][0]?.type == ChessFigure.Type.ROOK
                     && figures[7][0]?.side == ChessSide.WHITE
                 ) {
-                    moves.add(ChessMove.Castling(field, ChessField(rank = 7, file = 1)))
+                    moves.add(ChessMove.Castling(field, ChessField(rank = 7, file = 2)))
                 }
             }
         }
@@ -332,7 +332,7 @@ private fun ChessPosition.getKingMovesFromField(field: ChessField): Set<ChessMov
                     && figures[0][0]?.type == ChessFigure.Type.ROOK
                     && figures[0][0]?.side == ChessSide.BLACK
                 ) {
-                    moves.add(ChessMove.Castling(field, ChessField(rank = 0, file = 1)))
+                    moves.add(ChessMove.Castling(field, ChessField(rank = 0, file = 2)))
                 }
             }
         }

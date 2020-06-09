@@ -1,11 +1,13 @@
 package com.ne4ephoji.entities
 
 import com.ne4ephoji.exception.ChessException
+import com.ne4ephoji.utils.get
+import com.ne4ephoji.utils.set
 
 data class ChessPosition(
     val figures: Array<Array<ChessFigure?>>,
     var sideToMove: ChessSide,
-    var availableCastlings: ChessCastlings,
+    val availableCastlings: ChessCastlings,
     var enPassantTarget: ChessField?,
     var movesSinceLastTakeOrPawnMove: Int,
     var moveNumber: Int
@@ -38,6 +40,57 @@ data class ChessPosition(
         return result
     }
 
+    fun makeMove(move: ChessMove) {
+        if (figures[move.source]?.type == ChessFigure.Type.KING) {
+            when (sideToMove) {
+                ChessSide.WHITE -> {
+                    availableCastlings.whiteKingsideCastlingAvailable = false
+                    availableCastlings.whiteQueensideCastlingAvailable = false
+                }
+                ChessSide.BLACK -> {
+                    availableCastlings.blackKingsideCastlingAvailable = false
+                    availableCastlings.blackQueensideCastlingAvailable = false
+                }
+            }
+        }
+        when (move) {
+            is ChessMove.Castling -> {
+                figures[move.target] = figures[move.source]
+                figures[move.source] = null
+                if (move.target.file > move.source.file) {
+                    figures[move.source.rank][move.source.file + 1] = figures[move.source.rank][move.source.file + 3]
+                    figures[move.source.rank][move.source.file + 3] = null
+                } else {
+                    figures[move.source.rank][move.source.file - 1] = figures[move.source.rank][move.source.file - 4]
+                    figures[move.source.rank][move.source.file - 4] = null
+                }
+            }
+            is ChessMove.EnPassantTake -> {
+                figures[move.target] = figures[move.source]
+                when (sideToMove) {
+                    ChessSide.WHITE -> figures[move.target.rank + 1][move.target.file] = null
+                    ChessSide.BLACK -> figures[move.target.rank - 1][move.target.file] = null
+                }
+                figures[move.source] = null
+            }
+            is ChessMove.Movement, is ChessMove.Take -> {
+                figures[move.target] = figures[move.source]
+                figures[move.source] = null
+            }
+            is ChessMove.TransformationMovement -> {
+                figures[move.target] = move.figure
+                figures[move.source] = null
+            }
+            is ChessMove.TransformationTake -> {
+                figures[move.target] = move.figure
+                figures[move.source] = null
+            }
+        }
+        sideToMove = when (sideToMove) {
+            ChessSide.WHITE -> ChessSide.BLACK
+            ChessSide.BLACK -> ChessSide.WHITE
+        }
+    }
 
     companion object {
         const val CHESSBOARD_SIZE = 8
