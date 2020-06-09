@@ -50,7 +50,7 @@ private fun ChessPosition.getPawnMovesFromField(field: ChessField): Set<ChessMov
                 when (field.rank) {
                     3 -> enPassantTarget?.let {
                         if (abs(it.file - field.file) == 1) {
-                            moves.add(ChessMove.EnPassantTake(field, ChessField(rank = it.rank - 1, file = it.file)))
+                            moves.add(ChessMove.EnPassantTake(field, ChessField(rank = it.rank, file = it.file)))
                         }
                     }
                     6 -> if (figures[field.rank - 1][field.file] == null && figures[field.rank - 2][field.file] == null) {
@@ -86,7 +86,7 @@ private fun ChessPosition.getPawnMovesFromField(field: ChessField): Set<ChessMov
                 when (field.rank) {
                     4 -> enPassantTarget?.let {
                         if (abs(it.file - field.file) == 1) {
-                            moves.add(ChessMove.EnPassantTake(field, ChessField(rank = it.rank + 1, file = it.file)))
+                            moves.add(ChessMove.EnPassantTake(field, ChessField(rank = it.rank, file = it.file)))
                         }
                     }
                     1 -> if (figures[field.rank + 1][field.file] == null && figures[field.rank + 2][field.file] == null) {

@@ -57,14 +57,14 @@ data class ChessPosition(
         if (figures[move.source]?.type == ChessFigure.Type.PAWN || move is ChessMove.Take) {
             movesSinceLastTakeOrPawnMove = 0
         } else movesSinceLastTakeOrPawnMove++
-        if (figures[move.source]?.type == ChessFigure.Type.PAWN
+        enPassantTarget = if (figures[move.source]?.type == ChessFigure.Type.PAWN
             && abs(move.source.rank - move.target.rank) == 2
         ) {
-            enPassantTarget = ChessField(
+            ChessField(
                 rank = (move.source.rank + move.target.rank) / 2,
                 file = move.source.file
             )
-        } else enPassantTarget = null
+        } else null
         when (move) {
             is ChessMove.Castling -> {
                 figures[move.target] = figures[move.source]
