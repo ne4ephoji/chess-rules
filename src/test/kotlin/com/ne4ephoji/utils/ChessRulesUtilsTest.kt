@@ -34,7 +34,7 @@ class ChessRulesUtilsTest {
 
     @Test
     fun testPawnEnPassantMoves() {
-        val position = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq d5 0 1".asFENToPosition()
+        val position = "rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 1".asFENToPosition()
         val expectedMoves = setOf(
             ChessMove.Movement(ChessField(3, 4), ChessField(2, 4)),
             ChessMove.EnPassantTake(ChessField(3, 4), ChessField(2, 3))
